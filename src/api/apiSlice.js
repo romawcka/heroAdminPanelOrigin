@@ -27,4 +27,4 @@ export const apiSlice = createApi({
   })
 });
 
-export const {useGetHeroesQuery, useCreateHeroMutation, useDeleteHeroMutation} = apiSlice; // 19 useCreateHeroMutation
+export const {useGetHeroesQuery, useCreateHeroMutation, useDeleteHeroMutation} = apiSlice;
