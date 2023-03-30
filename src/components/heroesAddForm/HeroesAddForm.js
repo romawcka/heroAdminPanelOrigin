@@ -1,10 +1,11 @@
+import { useHttp } from '../../hooks/http.hook';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import store from '../../store';
 
 import { selectAll } from '../heroesFilters/filtersSlice';
-import { useCreateHeroMutation } from '../../api/apiSlice';
+import {heroCreated} from '../heroesList/heroesSlice';
 
 const HeroesAddForm = () => {
   // state for the contol of form
@@ -12,10 +13,10 @@ const HeroesAddForm = () => {
   const [heroDescr, setHeroDescr] = useState('');
   const [heroElement, setHeroElement] = useState('');
 
-  const [createHero] = useCreateHeroMutation();
-
   const {filtersLoadingStatus} = useSelector(state => state.filters);
   const filters = selectAll(store.getState());
+  const dispatch = useDispatch();
+  const {request} = useHttp();
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -26,9 +27,11 @@ const HeroesAddForm = () => {
       description: heroDescr,
       element: heroElement
     }
-
-    createHero(newHero).unwrap(); 
     
+    request('http://localhost:3001/heroes', 'POST', JSON.stringify(newHero))
+      .then(dispatch(heroCreated(newHero)))
+      .catch(err => console.log(err));
+
       // the form cleaner
       setHeroName('');
       setHeroDescr('');
@@ -56,7 +59,7 @@ const HeroesAddForm = () => {
     return (
         <form className="border p-4 shadow-lg rounded" onSubmit={onSubmitHandler}>
             <div className="mb-3">
-                <label htmlFor="name" className="form-label fs-4">New hero name</label>
+                <label htmlFor="name" className="form-label fs-4">New hero's name</label>
                 <input 
                     required
                     type="text" 
@@ -83,7 +86,7 @@ const HeroesAddForm = () => {
             </div>
 
             <div className="mb-3">
-                <label htmlFor="element" className="form-label">Choose the hero element</label>
+                <label htmlFor="element" className="form-label">Choose the hero's element</label>
                 <select 
                     required
                     className="form-select" 
