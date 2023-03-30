@@ -11,6 +11,12 @@
       "name": "Второй герой",
       "description": "Второй герой в рейтинге!",
       "element": "water"
+    },
+    {
+      "id": 3,
+      "name": "Третий герой",
+      "description": "Третий герой в рейтинге!",
+      "element": "wind"
     }
   ],
   "filters": [
