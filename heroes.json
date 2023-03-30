@@ -5,6 +5,12 @@
       "name": "Первый герой",
       "description": "Первый герой в рейтинге!",
       "element": "fire"
+    },
+    {
+      "id": 2,
+      "name": "Второй герой",
+      "description": "Второй герой в рейтинге!",
+      "element": "water"
     }
   ],
   "filters": [
